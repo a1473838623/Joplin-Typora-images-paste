@@ -41,9 +41,9 @@ import json
 import subprocess
 
 # WARNING: replace xxx with your joplin web clipper token
-token = "xxx"
+token = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 # WARNING: replace 41184 with your joplin web clipper port
-port = 41184
+port = "41184"
 # WARNING: replace python_exe_path with your python path, DO NOT DELELTE "r"
 python_exe_path = r'C:\Users\developer\AppData\Local\Programs\Python\Python312\python.exe'
 # WARNING: replace second_script_path with your second script path, DO NOT DELELTE "r"
