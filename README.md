@@ -21,7 +21,7 @@ If your aim is to upload images to other server(not joplin), then my solution is
 - To avoid Typora's waring, we pass the joplin-web-clipper-link firstly to Typora, this process is smooth and no problem will show. The next step is to replace the web-lipper-link with the joplin resources link using Python to write markdown file directly.
 - The only problem makes this solution unperfect is that writing file behavior may cause a conflict between Typora and Python, I tried use file_lock, but failed.
 - So although I try to fix the confict in writing file, and add retry function to retry the replacement for at most 10 times, it may aslo cause replacement fail.
-- Here is the notice: Please watch the URL replacement utill your next input. And you can avoid this confict by copying the resource_id from the joplin_web_clipper_url and change the image link to the format "resouces/resources_id.png" since joplin_web_clipper_url contains the resources_id already.
+- Here is the notice: please watch the URL replacement happening before your next input. And you can avoid this confict by copying the resource_id from the joplin_web_clipper_url and change the image link to the format "resouces/resources_id.png" since joplin_web_clipper_url contains the resources_id already.
 
 ## Steps
 Here is the step.
