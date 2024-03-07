@@ -15,14 +15,6 @@ If your aim is to upload images to other server(not joplin), then my solution is
 - Use joplin web clipper to upload images to Joplin as resources.
 - Use Typora upload-image-custom-command(see "https://support.typora.io/Upload-Image/") to run custom-command(could be a python script) and pass the typora-image-local-path and the current-markdown-file-path.
 
-## Problem
-- Typora upload-images-custom-command works when links print as lines in shell. It pass N number of images path to the command args and receive last N number of output as the link to replace.
-- But Typora will think "resouces/resources_id.png" as a illegal URL and it will warn you by showing the path. Of course we can handly copy the path and replace it, we can also replace the content using Python script by writing the markdown file directly(Typora command support pass ${filepath} to the shell, which is the current markdown file path).
-- To avoid Typora's waring, we pass the joplin-web-clipper-link firstly to Typora, this process is smooth and no problem will show. The next step is to replace the web-lipper-link with the joplin resources link using Python to write markdown file directly.
-- The only problem makes this solution unperfect is that writing file behavior may cause a conflict between Typora and Python, I tried use file_lock, but failed.
-- So although I try to fix the confict in writing file, and add retry function to retry the replacement for at most 10 times, it may aslo cause replacement fail.
-- Here is the notice: please watch the URL replacement happening before your next input. And you can avoid this confict by copying the resource_id from the joplin_web_clipper_url and change the image link to the format "resouces/resources_id.png" since joplin_web_clipper_url contains the resources_id already.
-
 ## Steps
 Here is the step.
 1. Click "edit outside" in joplin. Make sure that you have set typora as default markdown editor.
@@ -126,3 +118,11 @@ sys.exit()
 ```
 7. Upload your image by click right on the link in typora(DO NOT forget to click upload, this is important). Firstly, the link will be set to web clipper link, and after a sleep time (5 seconds) set in python script, your link will be change to joplin link(if not set, please wait more 5 seconds or you can copy the resouces_id from the web_clipper_link, and replace the old URL to the format "resources/{resources_id}.png").
 8. Please note that this solution is only tested in latest version of Joplin-desktop for windows 10. Other system may need change the python script.
+
+## Problem
+- Typora upload-images-custom-command works when links print as lines in shell. It pass N number of images path to the command args and receive last N number of output as the link to replace.
+- But Typora will think "resouces/resources_id.png" as a illegal URL and it will warn you by showing the path. Of course we can handly copy the path and replace it, we can also replace the content using Python script by writing the markdown file directly(Typora command support pass ${filepath} to the shell, which is the current markdown file path).
+- To avoid Typora's waring, we pass the joplin-web-clipper-link firstly to Typora, this process is smooth and no problem will show. The next step is to replace the web-lipper-link with the joplin resources link using Python to write markdown file directly.
+- The only problem makes this solution unperfect is that writing file behavior may cause a conflict between Typora and Python, I tried use file_lock, but failed.
+- So although I try to fix the confict in writing file, and add retry function to retry the replacement for at most 10 times, it may aslo cause replacement fail.
+- Here is the notice: please watch the URL replacement happening before your next input. And you can avoid this confict by copying the resource_id from the joplin_web_clipper_url and change the image link to the format "resouces/resources_id.png" since joplin_web_clipper_url contains the resources_id already.
