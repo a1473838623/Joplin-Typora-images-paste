@@ -23,7 +23,7 @@ If your aim is to upload images to other server(not joplin), then my solution is
 - So although I try to fix the confict in writing file, and add retry function to retry the replacement for at most 10 times, it may aslo cause replacement fail.
 - Here is the notice: Please watch the URL replacement utill your next input. And you can avoid this confict by copying the resource_id from the joplin_web_clipper_url and change the image link to the format "resouces/resources_id.png" since joplin_web_clipper_url contains the resources_id already.
 
-## Setps
+## Steps
 Here is the step.
 1. Click "edit outside" in joplin. Make sure that you have set typora as default markdown editor.
 2. Paste your image direct to Typora.
