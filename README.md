@@ -116,8 +116,9 @@ for i in range(retry_times):
         time.sleep(delay_time)
 sys.exit()
 ```
-7. Upload your image by click right on the link in typora(DO NOT forget to click upload, this is important). Firstly, the link will be set to web clipper link, and after a sleep time (5 seconds) set in python script, your link will be change to joplin link(if not set, please wait more 5 seconds or you can copy the resouces_id from the web_clipper_link, and replace the old URL to the format "resources/{resources_id}.png").
-8. Please note that this solution is only tested in latest version of Joplin-desktop for windows 10. Other system may need change the python script.
+7. Open "auto save" config in Typora.
+8. Upload your image by click right on the link in typora(DO NOT forget to click upload, this is important). Firstly, the link will be set to web clipper link. After upload, I recomand you to press "ctrl + s" to save current file(although we have open "auto save", if web-clipper-link doesn't save to current file, python will not able to detect the web-clipper-link and repalce it with the correct joplin-resource-link). After a sleep time (5 seconds) set in python script, your link will be change to joplin link(if not set, please wait more 5 seconds or you can copy the resouces_id from the web_clipper_link, and replace the old URL to the format "resources/{resources_id}.png").
+9. Please note that this solution is only tested in latest version of Joplin-desktop for windows 10. Other system may need change the python script.
 
 ## Problem
 - Typora upload-images-custom-command works when links print as lines in shell. It pass N number of images path to the command args and receive last N number of output as the link to replace.
