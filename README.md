@@ -85,8 +85,12 @@ import time
 
 # We need to wait Typora's replacement happens first
 delay_time = 5
-# If we are typing during the Python's writing file, it will not cause any error but the replacement is fail 
-# So we retry the function to fix it
+
+
+# After Typora replace the typora-local-image-link with web-clipper-link,
+# and you didn't press "ctrl + s" to save, your content is not "commit" to current file,
+# which makes python can't detect web-clipper-link and replace it with joplin-resources-link. 
+# So we retry the function at least for 10 times to wait your save.(if you didn't press "ctrl + s" to save in 50 seconds, the replacement will end to fail)
 retry_times = 10
 time.sleep(delay_time)
 
@@ -100,13 +104,6 @@ for i in range(retry_times):
                     continue
                 # replace newFilePath with "resources/{id}.png"
                 file_content = file_content.replace(sys.argv[index], sys.argv[index + 1])
-            # usually we upload at least one image, sys.argv[3] is the first image path in form of "resources/{id}.png"
-            # if the first image link is replaced, then the replacement is success
-            # but there is one expect: typora will question you to reload your file
-            # if you click yes, it may write your old content in Typora editor directly to the file
-            # which makes the replacement fail. So we retry the function at least for 5 times to make sure the replacement happened.
-            if(file_content == file_content_copy and (sys.argv[3] in file_content_copy) and i > 5):
-                sys.exit()
             file.seek(0)
             file.write(file_content)
             file.truncate()
@@ -117,12 +114,12 @@ for i in range(retry_times):
 sys.exit()
 ```
 7. Open "auto save" config in Typora.
-8. Upload your image by click right on the link in typora(DO NOT forget to click upload, this is important). Firstly, the link will be set to web clipper link. After upload, I recomand you to press "ctrl + s" to save current file(although we have open "auto save", if web-clipper-link doesn't save to current file, python will not able to detect the web-clipper-link and repalce it with the correct joplin-resource-link). After a sleep time (5 seconds) set in python script, your link will be change to joplin link(if not set, please wait more 5 seconds or you can copy the resouces_id from the web_clipper_link, and replace the old URL to the format "resources/{resources_id}.png").
+8. Upload your image by click right on the link in typora(DO NOT forget to click upload, this is important). Firstly, the link will be set to web clipper link. After upload, I recomand you to press "ctrl + s" to save current file(although we have open "auto save", if web-clipper-link doesn't save to current file, python will not able to detect the web-clipper-link and repalce it with the correct joplin-resource-link). After a sleep time (5 seconds) set in python script, your link will be change to joplin link(if not set, please press "ctrl+s" and wait more 5 seconds or you can copy the resouces_id from the web_clipper_link, and replace the old URL to the format "resources/{resources_id}.png").
 9. Please note that this solution is only tested in latest version of Joplin-desktop for windows 10. Other system may need change the python script.
 
 ## Problem
 - Typora upload-images-custom-command works when links print as lines in shell. It pass N number of images path to the command args and receive last N number of output as the link to replace.
 - But Typora will think "resouces/resources_id.png" as a illegal URL and it will warn you by showing the path. Of course we can handly copy the path and replace it, we can also replace the content using Python script by writing the markdown file directly(Typora command support pass ${filepath} to the shell, which is the current markdown file path).
 - To avoid Typora's waring, we pass the joplin-web-clipper-link firstly to Typora, this process is smooth and no problem will show. The next step is to replace the web-lipper-link with the joplin resources link using Python to write markdown file directly.
-- So although I add retry function to write file for at most 10 times, it may aslo cause replacement fail. This is because the "save" process is not commit to the file after the typora-local-image-link is replaced by web-clipper-link, and that's why we should open "auto save" setting in Typora and press "ctrl + s" after the web-clipper-link shows up.
-- Here is the notice: After click upload, please press "ctrl+s" and watch the URL replacement happening before your next input. You can also choose to copy the resource_id from the joplin_web_clipper_link and change the image link to the format "resouces/resources_id.png" since joplin_web_clipper_url contains the resources_id already.
+- Although I add retry function to write file for at most 10 times, it may aslo cause replacement fail. This is because the markdown file may not save automatically after the typora-local-image-link is replaced by web-clipper-link even though we have opened "auto save" setting, and that's why we should press "ctrl + s" after the web-clipper-link shows up.
+- Here is the notice: After uploading the image, if you see web-clipper-link appear, please press "ctrl+s" and observe the URL replacement to joplin-resources-link before your next typing. You can also choose to copy the "resources/resources_id" from joplin_web_clipper_link and change the image link to "resouces/resources_id.png" format since joplin_web_clipper_url already contains the resources_id.
