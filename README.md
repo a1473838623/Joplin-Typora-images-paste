@@ -20,7 +20,7 @@ Here is the step.
 1. Click "edit outside" in joplin. Make sure that you have set typora as default markdown editor.
 2. Paste your image direct to Typora.
 3. Open your Typora Preference > Image > Upload service setting > custom command 
-     write:  "C:\Users\developer\AppData\Local\Programs\Python\Python312\python.exe C:\Users\developer\Desktop\files\typora-windows.py  ${filepath} "
+     write:  "C:\Users\developer\AppData\Local\Programs\Python\Python312\python.exe" "C:\Users\developer\Desktop\files\typora-windows.py" "${filepath}"
   - the "C:\Users\developer\AppData\Local\Programs\Python\Python312\python.exe" is where you install Python.
   - the C:\Users\developer\Desktop\files\typora-windows.py is the python script I will introduce below.
 4. Open your joplin web clipper in joplin setting > web clipper > open web clipper service and generate your token. Please take an eye on your web clipper port (default is 41184, if not, you should replace it in your python script).
